@@ -133,8 +133,9 @@ When 0, no border is showed."
                    ;;   (min height (or dired-posframe-height height)))
                    0)
    :min-width (or dired-posframe-min-width
-                  (let ((width (round (* (frame-width) 0.62))))
-                    (min width (or dired-posframe-width width))))))
+                  ;; (let ((width (round (* (frame-width) 0.62))))
+                  ;;   (min width (or dired-posframe-width width)))
+                  0)))
 
 (defun dired-posframe-display (str)
   "Display STR via `posframe' by `dired-posframe-style'."
