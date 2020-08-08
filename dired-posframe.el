@@ -174,9 +174,13 @@ When 0, no border is showed."
 (defun dired-posframe--create-string ()
   "Create display string for posframe."
   (when-let ((path (dired-get-filename nil 'noerror)))
-    (with-temp-buffer
-      (insert path)
-      (buffer-string))))
+    (if (file-directory-p path)
+        (with-current-buffer (dired-noselect path)
+          (buffer-substring-no-properties (point-min) (point-max)))
+      (when (file-readable-p path)
+        (with-temp-buffer
+          (insert-file-contents path)
+          (buffer-string))))))
 
 (defun dired-posframe--show ()
   "Show dired-posframe for current dired item."
