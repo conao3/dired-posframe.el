@@ -171,6 +171,10 @@ When 0, no border is showed."
          (window-top-left          . window-top-left-corner)
          (window-top-right         . window-top-right-cornerl)))))
 
+(defun dired-posframe--hide ()
+  "Hide dired-posframe."
+  (posframe-hide dired-posframe-buffer))
+
 (defun dired-posframe--create-string ()
   "Create display string for posframe."
   (when-let ((path (dired-get-filename nil 'noerror)))
@@ -186,7 +190,7 @@ When 0, no border is showed."
   "Show dired-posframe for current dired item."
   (if-let ((str (dired-posframe--create-string)))
       (dired-posframe-display str)
-    (posframe-hide dired-posframe-buffer)))
+    (dired-posframe--hide)))
 
 
 ;;; Advices
@@ -201,11 +205,19 @@ When 0, no border is showed."
   (apply fn args)
   (dired-posframe--show))
 
+(defun dired-posframe--advice-keyboard-quit (fn &rest args)
+  "Around advice for FN with ARGS."
+  ;; `keyboard-quit' also quit this function!
+  ;; We exec anything before apply original function.
+  (dired-posframe--hide)
+  (apply fn args))
+
 
 ;;; Main
 
 (defvar dired-posframe-advice-alist
-  '((dired-next-line . dired-posframe--advice-dired-next-line)
+  '((keyboard-quit . dired-posframe--advice-keyboard-quit)
+    (dired-next-line . dired-posframe--advice-dired-next-line)
     (dired-previous-line . dired-posframe--advice-dired-previous-line))
   "Alist for dired-posframe advice.
 See `dired-posframe--setup' and `dired-posframe--teardown'.")
@@ -217,6 +229,7 @@ See `dired-posframe--setup' and `dired-posframe--teardown'.")
 
 (defun dired-posframe-teardown ()
   "Setup dired-posframe-mode."
+  (dired-posframe--hide)
   (pcase-dolist (`(,sym . ,fn) dired-posframe-advice-alist)
     (advice-remove sym fn)))
 
