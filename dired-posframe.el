@@ -180,8 +180,9 @@ When 0, no border is showed."
 
 (defun dired-posframe--show ()
   "Show dired-posframe for current dired item."
-  (when-let ((str (dired-posframe--create-string)))
-    (dired-posframe-display str)))
+  (if-let ((str (dired-posframe--create-string)))
+      (dired-posframe-display str)
+    (posframe-hide dired-posframe-buffer)))
 
 
 ;;; Advices
