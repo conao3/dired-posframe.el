@@ -129,9 +129,9 @@ When 0, no border is showed."
 
 (defun dired-posframe-display (str)
   "Display STR via `posframe' by `dired-posframe-style'."
-  (let ((func (intern (format "dired-posframe-display-at-%s" dired-posframe-style))))
-    (if (functionp func)
-        (funcall func str)
+  (let ((fn (intern (format "dired-posframe-display-at-%s" dired-posframe-style))))
+    (if (functionp fn)
+        (funcall fn str)
       (funcall (intern (format "dired-posframe-display-at-%s" "point")) str))))
 
 (eval
