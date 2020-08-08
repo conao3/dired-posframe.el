@@ -106,6 +106,70 @@ When 0, no border is showed."
 (defvar peep-dired-posframe--display-p nil
   "The status of `peep-dired-posframe--display'.")
 
+(defun peep-dired-posframe--display (str &optional poshandler)
+  "Show STR in ivy's posframe with POSHANDLER."
+  (if (not (posframe-workable-p))
+      (warn "`posframe' can not be workable in your environment")
+    (apply #'posframe-show
+           peep-dired-posframe-buffer
+           :font peep-dired-posframe-font
+           :string str
+           :position (point)
+           :poshandler poshandler
+           :background-color (face-attribute 'peep-dired-posframe :background nil t)
+           :foreground-color (face-attribute 'peep-dired-posframe :foreground nil t)
+           :internal-border-width peep-dired-posframe-border-width
+           :internal-border-color (face-attribute 'peep-dired-posframe-border :background nil t)
+           :override-parameters peep-dired-posframe-parameters
+           (funcall peep-dired-posframe-size-function))))
+
+(defun peep-dired-posframe-get-size ()
+  "The default functon used by `peep-dired-posframe-size-function'."
+  (list
+   :height peep-dired-posframe-height
+   :width peep-dired-posframe-width
+   :min-height (or peep-dired-posframe-min-height
+                   ;; (let ((height (+ ivy-height 1)))
+                   ;;   (min height (or peep-dired-posframe-height height)))
+                   0)
+   :min-width (or peep-dired-posframe-min-width
+                  (let ((width (round (* (frame-width) 0.62))))
+                    (min width (or peep-dired-posframe-width width))))))
+
+(defun peep-dired-posframe-display (str)
+  "Display STR via `posframe' by `peep-dired-posframe-style'."
+  (let ((func (intern (format "peep-dired-posframe-display-at-%s" peep-dired-posframe-style))))
+    (if (functionp func)
+        (funcall func str)
+      (funcall (intern (format "peep-dired-posframe-display-at-%s" "point")) str))))
+
+(eval
+ `(progn
+    ,@(mapcar
+       (lambda (elm)
+         `(defun ,(intern (format "peep-dired-posframe-display-at-%s" (car elm))) (str)
+            ,(format "Display STR via `posframe' at %s" (car elm))
+            (peep-dired-posframe--display str #',(intern (format "posframe-poshandler-%s" (cdr elm))))))
+       '(;; (absolute-x-y             . absolute-x-y)
+         (frame-bottom-center      . frame-bottom-center)
+         (frame-bottom-left        . frame-bottom-left-corner)
+         (frame-bottom-right       . frame-bottom-right-corner)
+         (frame-center             . frame-center)
+         (frame-top-center         . frame-top-center)
+         (frame-top-left           . frame-top-left-corner)
+         (frame-top-right          . frame-top-right-corner)
+         (point-bottom-left        . point-bottom-left-corner)
+         (point-bottom-left-upward . point-bottom-left-corner-upward)
+         (point-top-left           . point-top-left-corner)
+         (point                    . point-bottom-left-corner)
+         (window-bottom-center     . window-bottom-center)
+         (window-bottom-left       . window-bottom-left-corner)
+         (window-bottom-right      . window-bottom-right-corner)
+         (window-center            . window-center)
+         (window-top-center        . window-top-center)
+         (window-top-left          . window-top-left-corner)
+         (window-top-right         . window-top-right-cornerl)))))
+
 
 ;;; Main
 
