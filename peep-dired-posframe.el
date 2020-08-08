@@ -36,6 +36,76 @@
   :group 'convenience
   :link '(url-link :tag "Github" "https://github.com/conao3/peep-dired-posframe.el"))
 
+(defcustom peep-dired-posframe-style 'point
+  "The style of peep-dired-posframe."
+  :group 'peep-dired-posframe
+  :type 'symbol)
+
+(defcustom peep-dired-posframe-font nil
+  "The font used by peep-dired-posframe.
+When nil, Using current frame's font as fallback."
+  :group 'peep-dired-posframe
+  :type '(choice (const :tag "inherit" nil)
+                 string))
+
+(defcustom peep-dired-posframe-width nil
+  "The width of peep-dired-posframe."
+  :group 'peep-dired-posframe
+  :type '(choice (const :tag "default" nil)
+                 number))
+
+(defcustom peep-dired-posframe-height nil
+  "The height of peep-dired-posframe."
+  :group 'peep-dired-posframe
+  :type '(choice (const :tag "default" nil)
+                 number))
+
+(defcustom peep-dired-posframe-min-width nil
+  "The width of peep-dired-min-posframe."
+  :group 'peep-dired-posframe
+  :type '(choice (const :tag "non-width" nil)
+                 number))
+
+(defcustom peep-dired-posframe-min-height nil
+  "The height of peep-dired-min-posframe."
+  :group 'peep-dired-posframe
+  :type '(choice (const :tag "non-width" nil)
+                 number))
+
+(defcustom peep-dired-posframe-size-function #'peep-dired-posframe-get-size
+  "The function which is used to deal with posframe's size."
+  :group 'peep-dired-posframe
+  :type 'function)
+
+(defcustom peep-dired-posframe-border-width 1
+  "The border width used by peep-dired-posframe.
+When 0, no border is showed."
+  :group 'peep-dired-posframe
+  :type '(choice (const :tag "non-width" nil)
+                 number))
+
+(defcustom peep-dired-posframe-parameters nil
+  "The frame parameters used by peep-dired-posframe."
+  :group 'peep-dired-posframe
+  :type '(choice (const :tag "no-parameters" nil)
+                 number))
+
+(defface peep-dired-posframe
+  '((t (:inherit default)))
+  "Face used by the peep-dired-posframe."
+  :group 'peep-dired-posframe)
+
+(defface peep-dired-posframe-border
+  '((t (:inherit default :background "gray50")))
+  "Face used by the peep-dired-posframe's border."
+  :group 'peep-dired-posframe)
+
+(defvar peep-dired-posframe-buffer " *peep-dired-posframe-buffer*"
+  "The posframe-buffer used by peep-dired-posframe.")
+
+(defvar peep-dired-posframe--display-p nil
+  "The status of `peep-dired-posframe--display'.")
+
 
 ;;; Main
 
