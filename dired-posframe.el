@@ -72,11 +72,6 @@ When nil, Using current frame's font as fallback."
   :type '(choice (const :tag "non-width" nil)
                  number))
 
-(defcustom dired-posframe-size-function #'dired-posframe-get-size
-  "The function which is used to deal with posframe's size."
-  :group 'dired-posframe
-  :type 'function)
-
 (defcustom dired-posframe-border-width 1
   "The border width used by dired-posframe.
 When 0, no border is showed."
@@ -110,32 +105,27 @@ When 0, no border is showed."
   "Show STR in ivy's posframe with POSHANDLER."
   (if (not (posframe-workable-p))
       (warn "`posframe' can not be workable in your environment")
-    (apply #'posframe-show
-           dired-posframe-buffer
-           :font dired-posframe-font
-           :string str
-           :position (point)
-           :poshandler poshandler
-           :background-color (face-attribute 'dired-posframe :background nil t)
-           :foreground-color (face-attribute 'dired-posframe :foreground nil t)
-           :internal-border-width dired-posframe-border-width
-           :internal-border-color (face-attribute 'dired-posframe-border :background nil t)
-           :override-parameters dired-posframe-parameters
-           (funcall dired-posframe-size-function))))
-
-(defun dired-posframe-get-size ()
-  "The default functon used by `dired-posframe-size-function'."
-  (list
-   :height dired-posframe-height
-   :width dired-posframe-width
-   :min-height (or dired-posframe-min-height
-                   ;; (let ((height (+ ivy-height 1)))
-                   ;;   (min height (or dired-posframe-height height)))
-                   0)
-   :min-width (or dired-posframe-min-width
-                  ;; (let ((width (round (* (frame-width) 0.62))))
-                  ;;   (min width (or dired-posframe-width width)))
-                  0)))
+    (posframe-show
+     dired-posframe-buffer
+     :font dired-posframe-font
+     :string str
+     :position (point)
+     :poshandler poshandler
+     :background-color (face-attribute 'dired-posframe :background nil t)
+     :foreground-color (face-attribute 'dired-posframe :foreground nil t)
+     :internal-border-width dired-posframe-border-width
+     :internal-border-color (face-attribute 'dired-posframe-border :background nil t)
+     :override-parameters dired-posframe-parameters
+     :height dired-posframe-height
+     :width dired-posframe-width
+     :min-height (or dired-posframe-min-height
+                     ;; (let ((height (+ ivy-height 1)))
+                     ;;   (min height (or dired-posframe-height height)))
+                     )
+     :min-width (or dired-posframe-min-width
+                    ;; (let ((width (round (* (frame-width) 0.62))))
+                    ;;   (min width (or dired-posframe-width width)))
+                    ))))
 
 (defun dired-posframe-display (str)
   "Display STR via `posframe' by `dired-posframe-style'."
