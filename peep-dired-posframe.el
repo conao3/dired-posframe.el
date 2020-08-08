@@ -29,6 +29,7 @@
 ;;; Code:
 
 (require 'posframe)
+(require 'dired)
 
 (defgroup peep-dired-posframe nil
   "Peep dired items using posframe."
