@@ -3,8 +3,8 @@
 all:
 
 REPO_USER    := conao3
-PACKAGE_NAME := peep-dired-posframe
-REPO_NAME    := peep-dired-posframe.el
+PACKAGE_NAME := dired-posframe
+REPO_NAME    := dired-posframe.el
 
 EMACS        ?= emacs
 

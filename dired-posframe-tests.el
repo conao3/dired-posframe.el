@@ -1,9 +1,9 @@
-  ;;; peep-dired-posframe-tests.el --- Test definitions for peep-dired-posframe  -*- lexical-binding: t; -*-
+  ;;; dired-posframe-tests.el --- Test definitions for dired-posframe  -*- lexical-binding: t; -*-
 
   ;; Copyright (C) 2019  Naoya Yamashita
 
   ;; Author: Naoya Yamashita <conao3@gmail.com>
-  ;; URL: https://github.com/conao3/peep-dired-posframe.el
+  ;; URL: https://github.com/conao3/dired-posframe.el
 
   ;; This program is free software: you can redistribute it and/or modify
   ;; it under the terms of the GNU General Public License as published by
@@ -20,15 +20,15 @@
 
   ;;; Commentary:
 
-  ;; Test definitions for `peep-dired-posframe'.
+  ;; Test definitions for `dired-posframe'.
 
 
   ;;; Code:
 
   (require 'cort)
-  (require 'peep-dired-posframe)
+  (require 'dired-posframe)
 
 
-  ;; (provide 'peep-dired-posframe-tests)
+  ;; (provide 'dired-posframe-tests)
 
-  ;;; peep-dired-posframe-tests.el ends here
+  ;;; dired-posframe-tests.el ends here

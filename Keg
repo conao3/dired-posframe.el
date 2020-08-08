@@ -3,7 +3,7 @@
 (source gnu melpa)
 
 (package
- (peep-dired-posframe
-  (recipe . (peep-dired-posframe :fetcher github :repo "conao3/peep-dired-posframe.el"))))
+ (dired-posframe
+  (recipe . (dired-posframe :fetcher github :repo "conao3/dired-posframe.el"))))
 
 (dev-dependency cort)
