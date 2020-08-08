@@ -36,6 +36,24 @@
   :group 'convenience
   :link '(url-link :tag "Github" "https://github.com/conao3/peep-dired-posframe.el"))
 
+
+;;; Main
+
+(defun peep-dired-posframe-setup ()
+  "Setup peep-dired-posframe-mode.")
+
+(defun peep-dired-posframe-teardown ()
+  "Setup peep-dired-posframe-mode.")
+
+;;;###autoload
+(define-minor-mode peep-dired-posframe-mode
+  "Enable peep-dired-posframe-mode."
+  :lighter " peep-dired-pf"
+  :group 'peep-dired-posframe
+  (if peep-dired-posframe-mode
+      (peep-dired-posframe-setup)
+    (peep-dired-posframe-teardown)))
+
 (provide 'peep-dired-posframe)
 
 ;;; peep-dired-posframe.el ends here
