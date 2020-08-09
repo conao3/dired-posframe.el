@@ -25,6 +25,9 @@
 
 ;; Peep dired items using posframe.
 
+;; To use this package, simply add this to your init.el:
+;;   (add-hook 'dired-mode-hook 'dired-posframe-mode)
+
 
 ;;; Code:
 

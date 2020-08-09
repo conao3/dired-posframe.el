@@ -26,18 +26,39 @@
 * Description
 [[https://github.com/conao3/dired-posframe.el][https://raw.githubusercontent.com/conao3/files/master/blob/dired-posframe.el/dired-posframe.gif]]
 
-Peep dired items using posframe.
+- Image support ::
+
+[[https://raw.githubusercontent.com/conao3/files/master/blob/dired-posframe.el/dired-posframe-image.png][https://raw.githubusercontent.com/conao3/files/master/blob/dired-posframe.el/dired-posframe-image.png]]
+
+This package is a [[https://github.com/asok/peep-dired][peep-dired]] inspired, dired glimpse package using [[https://github.com/tumashu/posframe][posframe]].
 
 * Install
 Sample install code using [[https://github.com/conao3/leaf.el][leaf.el]].
 
 #+begin_src emacs-lisp
-  (leaf dired-posframe :ensure t)
+  (leaf dired-posframe
+    :ensure t
+    :hook dired-mode-hook)
 #+end_src
 
 * Usage
+Enable ~dired-posframe-mode~ in dired buffer.
 
 * Customize
+- dired-posframe-file-size-limit :: File size limit in Bytes. (default: ~(* 1 1024 1024)~)
+- dired-posframe-enable-modes :: Major mode automatically enabled. (default: ~'(image-mode)~)
+- dired-posframe-style :: The style of dired-posframe. (default: ~'point~)
+- dired-posframe-font :: The font used by dired-posframe. (default: ~nil~)
+- dired-posframe-width :: The width of dired-posframe. (default: ~80~)
+- dired-posframe-height :: The height of dired-posframe. (default: ~40~)
+- dired-posframe-min-width :: The width of dired-min-posframe. (default: ~80~)
+- dired-posframe-min-height :: The height of dired-min-posframe. (default: ~nil~)
+- dired-posframe-border-width :: The border width used by dired-posframe. (default: ~1~)
+- dired-posframe-parameters :: The frame parameters used by dired-posframe. (defaullt: ~nil~)
+- dired-posframe-use-post-command-hook :: If non-nil, enable additional useful features using `post-command-hook'. (default: ~nil~)
+
+- dired-posframe :: Face used by the dired-posframe. (default: ~'((t (:inherit default)))~)
+- dired-posframe-border :: Face used by the dired-posframe's border. (default: ~'((t (:inherit default :background "gray50")))~)
 
 * Information
 ** Community
@@ -64,7 +85,7 @@ Below operation flow is recommended.
   git checkout [feature-branch]     # Checkout branch named [feature-branch]
 
   # <edit loop>
-  emacs dired-posframe.el             # Edit something you want
+  emacs dired-posframe.el           # Edit something you want
 
   make test                         # Test dired-posframe
   git commit -am "brabra"           # Commit (auto-run test before commit)
