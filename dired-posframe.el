@@ -36,6 +36,13 @@
   :group 'convenience
   :link '(url-link :tag "Github" "https://github.com/conao3/dired-posframe.el"))
 
+(defcustom dired-posframe-file-size-limit (* 1 1024 1024)
+  "File size limit in Bytes.
+Large files are often binary files, resulting in slow performance.
+The default value is 1MB."
+  :group 'dired-posframe
+  :type 'integer)
+
 (defcustom dired-posframe-style 'point
   "The style of dired-posframe."
   :group 'dired-posframe
@@ -178,7 +185,12 @@ When 0, no border is showed."
         (insert (with-current-buffer (dired-noselect path)
                   (buffer-substring-no-properties (point-min) (point-max)))))
        ((file-readable-p path)
-        (insert-file-contents path))))
+        (let ((size (file-attribute-size (file-attributes path))))
+          (if (< dired-posframe-file-size-limit size)
+              (insert (format "Exceeds limit; %dMB < %dMB"
+                            (/ dired-posframe-file-size-limit (* 1024 1024))
+                            (/ size (* 1024 1024))))
+            (insert-file-contents path))))))
     (if hide
         (dired-posframe--hide)
       (dired-posframe-display dired-posframe-buffer))))
