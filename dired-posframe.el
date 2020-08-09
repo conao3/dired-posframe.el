@@ -190,17 +190,12 @@ When 0, no border is showed."
 
 ;;; Advices
 
-(defun dired-posframe--advice-dired-next-line (fn &rest args)
+(defun dired-posframe--advice-show (fn &rest args)
   "Around advice for FN with ARGS."
   (apply fn args)
   (dired-posframe--show))
 
-(defun dired-posframe--advice-dired-previous-line (fn &rest args)
-  "Around advice for FN with ARGS."
-  (apply fn args)
-  (dired-posframe--show))
-
-(defun dired-posframe--advice-keyboard-quit (fn &rest args)
+(defun dired-posframe--advice-hide (fn &rest args)
   "Around advice for FN with ARGS."
   ;; `keyboard-quit' also quit this function!
   ;; We exec anything before apply original function.
@@ -211,9 +206,9 @@ When 0, no border is showed."
 ;;; Main
 
 (defvar dired-posframe-advice-alist
-  '((keyboard-quit . dired-posframe--advice-keyboard-quit)
-    (dired-next-line . dired-posframe--advice-dired-next-line)
-    (dired-previous-line . dired-posframe--advice-dired-previous-line))
+  '((keyboard-quit . dired-posframe--advice-hide)
+    (dired-next-line . dired-posframe--advice-show)
+    (dired-previous-line . dired-posframe--advice-show))
   "Alist for dired-posframe advice.
 See `dired-posframe--setup' and `dired-posframe--teardown'.")
 
