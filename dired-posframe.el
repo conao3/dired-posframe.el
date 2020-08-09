@@ -185,8 +185,8 @@ Features:
 
 (defun dired-posframe--display (buf)
   "Display BUF via `posframe' by `dired-posframe-style'."
-  (let ((fn (intern (format "dired-posframe-display-at-%s" dired-posframe-style)))
-        (defaultfn (intern (format "dired-posframe-display-at-%s" "point"))))
+  (let ((fn (intern (format "dired-posframe--display-at-%s" dired-posframe-style)))
+        (defaultfn (intern (format "dired-posframe--display-at-%s" "point"))))
     (if (functionp fn)
         (funcall fn buf)
       (funcall defaultfn buf))))
@@ -195,7 +195,7 @@ Features:
  `(progn
     ,@(mapcar
        (lambda (elm)
-         `(defun ,(intern (format "dired-posframe-display-at-%s" (car elm))) (buf)
+         `(defun ,(intern (format "dired-posframe--display-at-%s" (car elm))) (buf)
             ,(format "Display BUF via `posframe' at %s" (car elm))
             (dired-posframe--display-1 buf #',(intern (format "posframe-poshandler-%s" (cdr elm))))))
        '(;; (absolute-x-y             . absolute-x-y)
