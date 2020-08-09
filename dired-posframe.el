@@ -113,6 +113,37 @@ When 0, no border is showed."
   "Face used by the dired-posframe's border."
   :group 'dired-posframe)
 
+(defvar dired-posframe-mode)
+(defvar dired-posframe--recent-show-buffer nil)
+(defvar dired-posframe--recent-hide-buffer nil)
+
+(defun dired-posframe--post-command ()
+  "Hook function for `post-command-hook'.
+This hook function is registered if `dired-posframe-use-post-command-hook'
+is non-nil."
+  (when (or (not dired-posframe-mode)
+            (not (eq dired-posframe--recent-show-buffer (current-buffer))))
+    (dired-posframe--hide))
+  (when (and dired-posframe-mode
+             (not (eq dired-posframe--recent-hide-buffer (current-buffer))))
+    (dired-posframe--show)))
+
+(defcustom dired-posframe-use-post-command-hook t
+  "If non-nil, enable additional useful features using `post-command-hook'.
+Those features are useful but it makes your Emacs slightly slow
+because it uses `post-command-hook'.
+
+Features:
+  - Hide dired-posframe when lost window focus.
+  - Show dired-posframe when get window focus."
+  :group 'dird-posframe
+  :type 'boolean
+  :set (lambda (sym val)
+         (set-default sym val)
+         (if val
+             (add-hook 'post-command-hook 'dired-posframe--post-command)
+           (remove-hook 'post-command-hook 'dired-posframe--post-command))))
+
 
 ;;; Functions
 
@@ -184,10 +215,12 @@ When 0, no border is showed."
 
 (defun dired-posframe--hide ()
   "Hide dired-posframe."
+  (setq dired-posframe--recent-hide-buffer (current-buffer))
   (posframe-hide dired-posframe-buffer))
 
 (defun dired-posframe--show ()
   "Show dired-posframe for current dired item."
+  (setq dired-posframe--recent-show-buffer (current-buffer))
   (let ((path (dired-get-filename nil 'noerror))
         hide)
     (with-current-buffer (get-buffer-create dired-posframe-buffer)
