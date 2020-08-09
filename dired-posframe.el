@@ -114,6 +114,7 @@ When 0, no border is showed."
   :group 'dired-posframe)
 
 (defvar dired-posframe-mode)
+(defvar dired-posframe--recent-show-point nil)
 (defvar dired-posframe--recent-show-buffer nil)
 (defvar dired-posframe--recent-hide-buffer nil)
 
@@ -125,7 +126,8 @@ is non-nil."
             (not (eq dired-posframe--recent-show-buffer (current-buffer))))
     (dired-posframe--hide))
   (when (and dired-posframe-mode
-             (not (eq dired-posframe--recent-hide-buffer (current-buffer))))
+             (not (eq dired-posframe--recent-hide-buffer (current-buffer)))
+             (not (eq dired-posframe--recent-show-point (point))))
     (dired-posframe--show)))
 
 (defcustom dired-posframe-use-post-command-hook t
@@ -220,6 +222,7 @@ Features:
 
 (defun dired-posframe--show ()
   "Show dired-posframe for current dired item."
+  (setq dired-posframe--recent-show-point (point))
   (setq dired-posframe--recent-show-buffer (current-buffer))
   (let ((path (dired-get-filename nil 'noerror))
         hide)
