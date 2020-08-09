@@ -255,6 +255,14 @@ Features:
         (dired-posframe--hide)
       (dired-posframe-display dired-posframe-buffer))))
 
+;;;###autoload
+(defun dired-posframe-show ()
+  "Show dired-posframe manually without enabling `dired-posframe-mode'.
+To hide, please invoke `keyboard-quit'."
+  (interactive)
+  (dired-posframe--show)
+  (advice-add 'keyboard-quit :around #'dired-posframe--advice-hide-force))
+
 
 ;;; Advices
 
@@ -270,6 +278,13 @@ Features:
   ;; We exec anything before apply original function.
   (when dired-posframe-mode
     (dired-posframe--hide))
+  (apply fn args))
+
+(defun dired-posframe--advice-hide-force (fn &rest args)
+  "Around advice for FN with ARGS."
+  ;; `keyboard-quit' also quit this function!
+  ;; We exec anything before apply original function.
+  (dired-posframe--hide)
   (apply fn args))
 
 
