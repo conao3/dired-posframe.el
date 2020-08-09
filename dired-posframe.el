@@ -101,14 +101,13 @@ When 0, no border is showed."
 (defvar dired-posframe--display-p nil
   "The status of `dired-posframe--display'.")
 
-(defun dired-posframe--display (str &optional poshandler)
-  "Show STR in ivy's posframe with POSHANDLER."
+(defun dired-posframe--display (buf &optional poshandler)
+  "Show BUF in posframe with POSHANDLER."
   (if (not (posframe-workable-p))
       (warn "`posframe' can not be workable in your environment")
     (posframe-show
-     dired-posframe-buffer
+     buf
      :font dired-posframe-font
-     :string str
      :position (point)
      :poshandler poshandler
      :background-color (face-attribute 'dired-posframe :background nil t)
@@ -127,21 +126,21 @@ When 0, no border is showed."
                     ;;   (min width (or dired-posframe-width width)))
                     ))))
 
-(defun dired-posframe-display (str)
-  "Display STR via `posframe' by `dired-posframe-style'."
+(defun dired-posframe-display (buf)
+  "Display BUF via `posframe' by `dired-posframe-style'."
   (let ((fn (intern (format "dired-posframe-display-at-%s" dired-posframe-style)))
         (defaultfn (intern (format "dired-posframe-display-at-%s" "point"))))
     (if (functionp fn)
-        (funcall fn str)
-      (funcall defaultfn str))))
+        (funcall fn buf)
+      (funcall defaultfn buf))))
 
 (eval
  `(progn
     ,@(mapcar
        (lambda (elm)
-         `(defun ,(intern (format "dired-posframe-display-at-%s" (car elm))) (str)
-            ,(format "Display STR via `posframe' at %s" (car elm))
-            (dired-posframe--display str #',(intern (format "posframe-poshandler-%s" (cdr elm))))))
+         `(defun ,(intern (format "dired-posframe-display-at-%s" (car elm))) (buf)
+            ,(format "Display BUF via `posframe' at %s" (car elm))
+            (dired-posframe--display buf #',(intern (format "posframe-poshandler-%s" (cdr elm))))))
        '(;; (absolute-x-y             . absolute-x-y)
          (frame-bottom-center      . frame-bottom-center)
          (frame-bottom-left        . frame-bottom-left-corner)
@@ -179,9 +178,13 @@ When 0, no border is showed."
 
 (defun dired-posframe--show ()
   "Show dired-posframe for current dired item."
-  (if-let ((str (dired-posframe--create-string)))
-      (dired-posframe-display str)
-    (dired-posframe--hide)))
+  (let ((str (dired-posframe--create-string)))
+    (if (not str)
+        (dired-posframe--hide)
+      (with-current-buffer (get-buffer-create dired-posframe-buffer)
+        (erase-buffer)
+        (insert str))
+      (dired-posframe-display dired-posframe-buffer))))
 
 
 ;;; Advices
