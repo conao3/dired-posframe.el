@@ -158,7 +158,7 @@ Features:
 (defvar dired-posframe--display-p nil
   "The status of `dired-posframe--display'.")
 
-(defun dired-posframe--display (buf &optional poshandler)
+(defun dired-posframe--display-1 (buf &optional poshandler)
   "Show BUF in posframe with POSHANDLER."
   (if (not (posframe-workable-p))
       (warn "`posframe' can not be workable in your environment")
@@ -183,7 +183,7 @@ Features:
                     ;;   (min width (or dired-posframe-width width)))
                     ))))
 
-(defun dired-posframe-display (buf)
+(defun dired-posframe--display (buf)
   "Display BUF via `posframe' by `dired-posframe-style'."
   (let ((fn (intern (format "dired-posframe-display-at-%s" dired-posframe-style)))
         (defaultfn (intern (format "dired-posframe-display-at-%s" "point"))))
@@ -197,7 +197,7 @@ Features:
        (lambda (elm)
          `(defun ,(intern (format "dired-posframe-display-at-%s" (car elm))) (buf)
             ,(format "Display BUF via `posframe' at %s" (car elm))
-            (dired-posframe--display buf #',(intern (format "posframe-poshandler-%s" (cdr elm))))))
+            (dired-posframe--display-1 buf #',(intern (format "posframe-poshandler-%s" (cdr elm))))))
        '(;; (absolute-x-y             . absolute-x-y)
          (frame-bottom-center      . frame-bottom-center)
          (frame-bottom-left        . frame-bottom-left-corner)
@@ -253,7 +253,7 @@ Features:
               (set-auto-mode-0 'fundamental-mode 'keep-mode-if-same))))))
     (if hide
         (dired-posframe--hide)
-      (dired-posframe-display dired-posframe-buffer))))
+      (dired-posframe--display dired-posframe-buffer))))
 
 ;;;###autoload
 (defun dired-posframe-show ()
