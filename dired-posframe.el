@@ -255,13 +255,15 @@ Features:
 (defun dired-posframe--advice-show (fn &rest args)
   "Around advice for FN with ARGS."
   (apply fn args)
-  (dired-posframe--show))
+  (when dired-posframe-mode
+    (dired-posframe--show)))
 
 (defun dired-posframe--advice-hide (fn &rest args)
   "Around advice for FN with ARGS."
   ;; `keyboard-quit' also quit this function!
   ;; We exec anything before apply original function.
-  (dired-posframe--hide)
+  (when dired-posframe-mode
+    (dired-posframe--hide))
   (apply fn args))
 
 
