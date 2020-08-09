@@ -206,7 +206,9 @@ When 0, no border is showed."
 ;;; Main
 
 (defvar dired-posframe-advice-alist
-  '((dired-next-line     . dired-posframe--advice-show)
+  '((forward-char        . dired-posframe--advice-show)
+    (backward-char       . dired-posframe--advice-show)
+    (dired-next-line     . dired-posframe--advice-show)
     (dired-previous-line . dired-posframe--advice-show)
     (dired-find-file     . dired-posframe--advice-hide)
     (keyboard-quit       . dired-posframe--advice-hide))
