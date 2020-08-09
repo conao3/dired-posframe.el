@@ -177,9 +177,8 @@ When 0, no border is showed."
        ((file-directory-p path)
         (insert (with-current-buffer (dired-noselect path)
                   (buffer-substring-no-properties (point-min) (point-max)))))
-       ((not (file-directory-p path))
-        (when (file-readable-p path)
-          (insert-file-contents path)))))
+       ((file-readable-p path)
+        (insert-file-contents path))))
     (if hide
         (dired-posframe--hide)
       (dired-posframe-display dired-posframe-buffer))))
