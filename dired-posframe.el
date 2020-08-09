@@ -66,19 +66,19 @@ When nil, Using current frame's font as fallback."
   :type '(choice (const :tag "inherit" nil)
                  string))
 
-(defcustom dired-posframe-width nil
+(defcustom dired-posframe-width 80
   "The width of dired-posframe."
   :group 'dired-posframe
   :type '(choice (const :tag "default" nil)
                  number))
 
-(defcustom dired-posframe-height nil
+(defcustom dired-posframe-height 40
   "The height of dired-posframe."
   :group 'dired-posframe
   :type '(choice (const :tag "default" nil)
                  number))
 
-(defcustom dired-posframe-min-width nil
+(defcustom dired-posframe-min-width 80
   "The width of dired-min-posframe."
   :group 'dired-posframe
   :type '(choice (const :tag "non-width" nil)
