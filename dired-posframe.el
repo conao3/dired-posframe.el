@@ -43,6 +43,17 @@ The default value is 1MB."
   :group 'dired-posframe
   :type 'integer)
 
+(defcustom dired-posframe-enable-modes '(image-mode)
+  "Major mode automatically enabled.
+
+The dired-posframe can enable major mode to displays the file with
+the appropriate font lock and to display images as images rather
+than characters.
+
+You can enable it by listing `major-mode' in this variable."
+  :group 'dired-posframe
+  :type 'sexp)
+
 (defcustom dired-posframe-style 'point
   "The style of dired-posframe."
   :group 'dired-posframe
@@ -177,6 +188,8 @@ When 0, no border is showed."
   (let ((path (dired-get-filename nil 'noerror))
         hide)
     (with-current-buffer (get-buffer-create dired-posframe-buffer)
+      (unless (eq major-mode 'fundamental-mode)
+        (fundamental-mode))
       (erase-buffer)
       (cond
        ((not path)
@@ -190,7 +203,11 @@ When 0, no border is showed."
               (insert (format "Exceeds limit; %dMB < %dMB"
                             (/ dired-posframe-file-size-limit (* 1024 1024))
                             (/ size (* 1024 1024))))
-            (insert-file-contents path))))))
+            (insert-file-contents path)
+            (let* ((name (file-name-nondirectory path))
+                   (mode (assoc-default name auto-mode-alist #'string-match)))
+              (when (memq mode dired-posframe-enable-modes)
+                (funcall mode))))))))
     (if hide
         (dired-posframe--hide)
       (dired-posframe-display dired-posframe-buffer))))
