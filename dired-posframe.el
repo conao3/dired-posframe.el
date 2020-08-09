@@ -113,6 +113,9 @@ When 0, no border is showed."
   "Face used by the dired-posframe's border."
   :group 'dired-posframe)
 
+
+;;; Functions
+
 (defvar dired-posframe-buffer " *dired-posframe-buffer*"
   "The posframe-buffer used by dired-posframe.")
 
