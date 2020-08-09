@@ -206,9 +206,9 @@ When 0, no border is showed."
 ;;; Main
 
 (defvar dired-posframe-advice-alist
-  '((keyboard-quit . dired-posframe--advice-hide)
-    (dired-next-line . dired-posframe--advice-show)
-    (dired-previous-line . dired-posframe--advice-show))
+  '((dired-next-line     . dired-posframe--advice-show)
+    (dired-previous-line . dired-posframe--advice-show)
+    (keyboard-quit       . dired-posframe--advice-hide))
   "Alist for dired-posframe advice.
 See `dired-posframe--setup' and `dired-posframe--teardown'.")
 
