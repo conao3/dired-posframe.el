@@ -64,7 +64,7 @@ Enable ~dired-posframe-mode~ in dired buffer.
 - dired-posframe-min-height :: The height of dired-min-posframe. (default: ~nil~)
 - dired-posframe-border-width :: The border width used by dired-posframe. (default: ~1~)
 - dired-posframe-parameters :: The frame parameters used by dired-posframe. (defaullt: ~nil~)
-- dired-posframe-use-post-command-hook :: If non-nil, enable additional useful features using `post-command-hook'. (default: ~nil~)
+- dired-posframe-use-post-command-hook :: If non-nil, enable additional useful features using `post-command-hook'. (default: ~t~)
 
 - dired-posframe :: Face used by the dired-posframe. (default: ~'((t (:inherit default)))~)
 - dired-posframe-border :: Face used by the dired-posframe's border. (default: ~'((t (:inherit default :background "gray50")))~)

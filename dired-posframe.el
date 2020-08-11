@@ -136,7 +136,7 @@ is non-nil."
              (not (eq dired-posframe--recent-show-point (point))))
     (dired-posframe--show)))
 
-(defcustom dired-posframe-use-post-command-hook nil
+(defcustom dired-posframe-use-post-command-hook t
   "If non-nil, enable additional useful features using `post-command-hook'.
 Those features are useful but it makes your Emacs slightly slow
 because it uses `post-command-hook'.
