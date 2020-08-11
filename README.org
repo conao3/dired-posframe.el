@@ -41,6 +41,15 @@ Sample install code using [[https://github.com/conao3/leaf.el][leaf.el]].
     :hook dired-mode-hook)
 #+end_src
 
+*OR*, You can use manual ~dired-posframe~.
+Hide posframe to type ~C-g~.
+
+#+begin_src emacs-lisp
+  (leaf dired-posframe
+    :ensure t
+    :bind (("C-*" . dired-posframe-show)))
+#+end_src
+
 * Usage
 Enable ~dired-posframe-mode~ in dired buffer.
 
