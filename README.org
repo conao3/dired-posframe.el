@@ -47,7 +47,8 @@ Hide posframe to type ~C-g~.
 #+begin_src emacs-lisp
   (leaf dired-posframe
     :ensure t
-    :bind (("C-*" . dired-posframe-show)))
+    :bind ((dired-mode-map
+            ("C-*" . dired-posframe-show))))
 #+end_src
 
 * Usage
