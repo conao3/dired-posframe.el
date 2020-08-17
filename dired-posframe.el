@@ -3,7 +3,7 @@
 ;; Copyright (C) 2020  Naoya Yamashita
 
 ;; Author: Naoya Yamashita <conao3@gmail.com>
-;; Version: 0.0.1
+;; Version: 1.0.0
 ;; Keywords: convenience
 ;; Package-Requires: ((emacs "26.1") (posframe "0.7"))
 ;; URL: https://github.com/conao3/dired-posframe.el
