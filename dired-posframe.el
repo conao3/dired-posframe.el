@@ -144,7 +144,7 @@ because it uses `post-command-hook'.
 Features:
   - Hide dired-posframe when lost window focus.
   - Show dired-posframe when get window focus."
-  :group 'dird-posframe
+  :group 'dired-posframe
   :type 'boolean
   :set (lambda (sym val)
          (set-default sym val)
