@@ -149,8 +149,8 @@ Features:
   :set (lambda (sym val)
          (set-default sym val)
          (if val
-             (add-hook 'post-command-hook 'dired-posframe--post-command)
-           (remove-hook 'post-command-hook 'dired-posframe--post-command))))
+             (add-hook 'post-command-hook #'dired-posframe--post-command)
+           (remove-hook 'post-command-hook #'dired-posframe--post-command))))
 
 
 ;;; Functions
