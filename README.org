@@ -1,121 +1,107 @@
+#+title: dired-posframe
 #+author: conao3
-#+date: <2020-03-20 Fri>
 
 [[https://github.com/conao3/dired-posframe.el][https://raw.githubusercontent.com/conao3/files/master/blob/headers/png/dired-posframe.el.png]]
+
 [[https://github.com/conao3/dired-posframe.el/blob/master/LICENSE][https://img.shields.io/github/license/conao3/dired-posframe.el.svg?style=flat-square]]
 [[https://github.com/conao3/dired-posframe.el/releases][https://img.shields.io/github/tag/conao3/dired-posframe.el.svg?style=flat-square]]
 [[https://github.com/conao3/dired-posframe.el/actions][https://github.com/conao3/dired-posframe.el/workflows/Main%20workflow/badge.svg]]
-[[https://app.codacy.com/project/conao3/dired-posframe.el/dashboard][https://img.shields.io/codacy/grade/62a36f4f04524d5e8c758440e8071c45.svg?logo=codacy&style=flat-square]]
-[[https://www.patreon.com/conao3][https://img.shields.io/badge/patreon-become%20a%20patron-orange.svg?logo=patreon&style=flat-square]]
-[[https://twitter.com/conao_3][https://img.shields.io/badge/twitter-@conao__3-blue.svg?logo=twitter&style=flat-square]]
-[[https://conao3-support.slack.com/join/shared_invite/enQtNjUzMDMxODcyMjE1LWUwMjhiNTU3Yjk3ODIwNzAxMTgwOTkxNmJiN2M4OTZkMWY0NjI4ZTg4MTVlNzcwNDY2ZjVjYmRiZmJjZDU4MDE][https://img.shields.io/badge/chat-on_slack-blue.svg?logo=slack&style=flat-square]]
 
-* Table of Contents
-- [[#description][Description]]
-- [[#install][Install]]
-- [[#usage][Usage]]
-- [[#customize][Customize]]
-- [[#information][Information]]
-  - [[#community][Community]]
-  - [[#contribution][Contribution]]
-  - [[#migration][Migration]]
-  - [[#license][License]]
-  - [[#author][Author]]
-  - [[#contributors][Contributors]]
+Preview files in dired using posframe.
 
-* Description
+* Overview
+
 [[https://github.com/conao3/dired-posframe.el][https://raw.githubusercontent.com/conao3/files/master/blob/dired-posframe.el/dired-posframe.gif]]
 
-- Image support ::
+*dired-posframe* provides a quick file preview in dired buffers, inspired by [[https://github.com/asok/peep-dired][peep-dired]]. It displays file contents in a floating frame ([[https://github.com/tumashu/posframe][posframe]]) as you navigate through your directory listing.
+
+** Features
+
+- Preview files and directories without leaving dired
+- Image preview support
+- Configurable frame position, size, and appearance
+- Automatic mode detection for syntax highlighting
 
 [[https://raw.githubusercontent.com/conao3/files/master/blob/dired-posframe.el/dired-posframe-image.png][https://raw.githubusercontent.com/conao3/files/master/blob/dired-posframe.el/dired-posframe-image.png]]
 
-This package is a [[https://github.com/asok/peep-dired][peep-dired]] inspired, dired glimpse package using [[https://github.com/tumashu/posframe][posframe]].
+* Requirements
 
-* Install
-Sample install code using [[https://github.com/conao3/leaf.el][leaf.el]].
+- Emacs 26.1 or later
+- [[https://github.com/tumashu/posframe][posframe]] 0.7 or later
 
-#+begin_src emacs-lisp
-  (leaf dired-posframe
-    :ensure t
-    :hook dired-mode-hook)
-#+end_src
+* Installation
 
-*OR*, You can use manual ~dired-posframe~.
-Hide posframe to type ~C-g~.
+** From MELPA
 
 #+begin_src emacs-lisp
-  (leaf dired-posframe
-    :ensure t
-    :bind ((dired-mode-map
-            ("C-*" . dired-posframe-show))))
+(use-package dired-posframe
+  :ensure t
+  :hook (dired-mode . dired-posframe-mode))
 #+end_src
+
+** Manual Trigger
+
+If you prefer to trigger the preview manually rather than automatically:
+
+#+begin_src emacs-lisp
+(use-package dired-posframe
+  :ensure t
+  :bind (:map dired-mode-map
+              ("C-*" . dired-posframe-show)))
+#+end_src
+
+Press =C-g= to dismiss the preview.
 
 * Usage
-Enable ~dired-posframe-mode~ in dired buffer.
 
-* Customize
-- dired-posframe-file-size-limit :: File size limit in Bytes. (default: ~(* 1 1024 1024)~)
-- dired-posframe-enable-modes :: Major mode automatically enabled. (default: ~'(image-mode)~)
-- dired-posframe-style :: The style of dired-posframe. (default: ~'point~)
-- dired-posframe-font :: The font used by dired-posframe. (default: ~nil~)
-- dired-posframe-width :: The width of dired-posframe. (default: ~80~)
-- dired-posframe-height :: The height of dired-posframe. (default: ~40~)
-- dired-posframe-min-width :: The width of dired-min-posframe. (default: ~80~)
-- dired-posframe-min-height :: The height of dired-min-posframe. (default: ~nil~)
-- dired-posframe-border-width :: The border width used by dired-posframe. (default: ~1~)
-- dired-posframe-parameters :: The frame parameters used by dired-posframe. (defaullt: ~nil~)
-- dired-posframe-use-post-command-hook :: If non-nil, enable additional useful features using `post-command-hook'. (default: ~t~)
+Enable =dired-posframe-mode= in any dired buffer. The preview will automatically appear as you move between files.
 
-- dired-posframe :: Face used by the dired-posframe. (default: ~'((t (:inherit default)))~)
-- dired-posframe-border :: Face used by the dired-posframe's border. (default: ~'((t (:inherit default :background "gray50")))~)
+* Customization
 
-* Information
-** Community
-Any feedback or suggestions are welcome!
+** Variables
 
-You can use github issues, but you can also use [[https://conao3-support.slack.com/join/shared_invite/enQtNjUzMDMxODcyMjE1LWUwMjhiNTU3Yjk3ODIwNzAxMTgwOTkxNmJiN2M4OTZkMWY0NjI4ZTg4MTVlNzcwNDY2ZjVjYmRiZmJjZDU4MDE][Slack]]
-if you want a more casual conversation.
+| Variable                              | Default            | Description                                       |
+|---------------------------------------+--------------------+---------------------------------------------------|
+| =dired-posframe-file-size-limit=      | 1048576 (1MB)      | Maximum file size to preview (in bytes)           |
+| =dired-posframe-enable-modes=         | =(image-mode)=     | Major modes to enable in the preview buffer       |
+| =dired-posframe-style=                | =point=            | Positioning style for the frame                   |
+| =dired-posframe-font=                 | =nil=              | Font for the preview (nil uses current frame)     |
+| =dired-posframe-width=                | =80=               | Frame width in characters                         |
+| =dired-posframe-height=               | =40=               | Frame height in lines                             |
+| =dired-posframe-min-width=            | =80=               | Minimum frame width                               |
+| =dired-posframe-min-height=           | =nil=              | Minimum frame height                              |
+| =dired-posframe-border-width=         | =1=                | Border width in pixels                            |
+| =dired-posframe-parameters=           | =nil=              | Additional frame parameters                       |
+| =dired-posframe-use-post-command-hook= | =t=               | Enable auto-show/hide on focus changes            |
 
-** Contribution
-We welcome PR!
+** Faces
 
-*** Require tools for testing
-- keg
-  #+begin_src shell
-    cd ~/
-    hub clone conao3/keg .keg
-    export PATH="$HOME/.keg/bin:$PATH"
-  #+end_src
+- =dired-posframe= - Main face for the preview frame
+- =dired-posframe-border= - Face for the frame border
 
-*** Running test
-Below operation flow is recommended.
+* Contributing
+
+Contributions are welcome. Please feel free to submit issues and pull requests.
+
+** Development Setup
+
+1. Clone the repository
+2. Install [[https://github.com/conao3/keg][keg]] for development tooling:
+   #+begin_src shell
+   git clone https://github.com/conao3/keg ~/.keg
+   export PATH="$HOME/.keg/bin:$PATH"
+   #+end_src
+
+** Testing
+
 #+begin_src shell
-  git branch [feature-branch]       # Create branch named [feature-branch]
-  git checkout [feature-branch]     # Checkout branch named [feature-branch]
-
-  # <edit loop>
-  emacs dired-posframe.el           # Edit something you want
-
-  make test                         # Test dired-posframe
-  git commit -am "brabra"           # Commit (auto-run test before commit)
-  # </edit loop>
-
-  hub fork                          # Create fork at GitHub
-  git push [user] [feature-branch]  # Push feature-branch to your fork
-  hub pull-request                  # Create pull-request
+make test
 #+end_src
 
-** Migration
+* License
 
-** License
-#+begin_example
-  General Public License Version 3 (GPLv3)
-  Copyright (c) Naoya Yamashita - https://conao3.com
-  https://github.com/conao3/dired-posframe.el/blob/master/LICENSE
-#+end_example
+GPL-3.0. See [[https://github.com/conao3/dired-posframe.el/blob/master/LICENSE][LICENSE]] for details.
 
-** Author
-- Naoya Yamashita ([[https://github.com/conao3][conao3]])
+* Author
 
-** Contributors
+Naoya Yamashita ([[https://github.com/conao3][conao3]])
