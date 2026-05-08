@@ -298,6 +298,8 @@ To hide, please invoke `keyboard-quit'."
     (backward-char       . dired-posframe--advice-show)
     (dired-next-line     . dired-posframe--advice-show)
     (dired-previous-line . dired-posframe--advice-show)
+    (dired-next-dirline  . dired-posframe--advice-show)
+    (dired-prev-dirline  . dired-posframe--advice-show)
     (mouse-set-point     . dired-posframe--advice-show)
     (dired-find-file     . dired-posframe--advice-hide)
     (keyboard-quit       . dired-posframe--advice-hide))
